@@ -1,0 +1,19 @@
+{
+    "name": "dosjein/vkdeepmine",
+    "description": "DeepMine service for Vkontakti",
+    "license": "top-secret",
+    "authors": [
+        {
+            "name": "John Dosje",
+            "email": "dosjein@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "~1.",
+        "erusev/parsedown": "^1.6",
+        "getjump/vk": "*",
+        "guzzlehttp/guzzle": "*",
+        "php-amqplib/php-amqplib": "2.6.*"
+    }
+}
