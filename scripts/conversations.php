@@ -50,35 +50,3 @@ foreach($vk->request('messages.getDialogs', ['count' => 200 ])->batch(200) as $d
         return;
     });
 }
-
-//MESSAGES IN
-foreach($vk->request('messages.get', ['count' => 200 , 'out' => 0])->batch(200) as $data){
-
-
-    $userMap = [];
-    $userCache = [];
-
-    $user = new \getjump\Vk\Wrapper\User($vk);
-
-    $fetchData = function($id) use($user, &$userMap, &$userCache , $msgObject)
-    {
-        if(!isset($userMap[$id]))
-        {
-            $userMap[$id] = sizeof($userCache);
-            $userCache[] = $user->get($id)->response->get();
-        }
-        return $userCache[$userMap[$id]];
-    };
-
-    //REQUEST WILL ISSUE JUST HERE! SINCE __get overrided
-    $data->each(function($key, $value) use($fetchData , $msgObject) {
-        $user = $fetchData($value->user_id);
-        $msgObject->in[] = array($user , $value);
-        sleep(1);
-        return;
-    });
-}
-
-$content = json_encode($msgObject);
-
-file_put_contents('../storage/msg_'.md5(getenv('VKTOKEN')) , $content);
